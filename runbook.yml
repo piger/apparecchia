@@ -1,0 +1,52 @@
+# workstation setup
+---
+- hosts: all
+  connection: local
+
+  environment:
+    HOMEBREW_CASK_OPTS: "--appdir=/Applications"
+
+  vars:
+    homebrew_apps:
+      - coreutils
+      - moreutils
+      - tmux
+      - pwgen
+      - atool
+      - gnupg
+      - ssh-copy-id
+      - jq
+      - tig
+      - mtr
+      - git
+      - gnu-sed
+      - gawk
+      - the_silver_searcher
+      - shellcheck
+      - socat
+      - awscli
+      - packer
+    cask_apps:
+      - vagrant
+      - virtualbox
+      - chefdk
+
+  tasks:
+    - name: Install applications from Homebrew
+      homebrew: name={{ item }} state=present
+      with_items: "{{ homebrew_apps }}"
+
+    - name: Install applications from Homebrew Cask
+      homebrew_cask: name={{ item }} state=present
+      with_items: "{{ cask_apps }}"
+
+    - name: NFS vagrant
+      become: yes
+      blockinfile:
+        dest: /etc/sudoers
+        validate: 'visudo -cf %s'
+        block: |
+          Cmnd_Alias VAGRANT_EXPORTS_ADD = /usr/bin/tee -a /etc/exports
+          Cmnd_Alias VAGRANT_NFSD = /sbin/nfsd restart
+          Cmnd_Alias VAGRANT_EXPORTS_REMOVE = /usr/bin/sed -E -e /*/ d -ibak /etc/exports
+          %admin ALL=(root) NOPASSWD: VAGRANT_EXPORTS_ADD, VAGRANT_NFSD, VAGRANT_EXPORTS_REMOVE
