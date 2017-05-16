@@ -52,4 +52,4 @@ install_virtualenv
 install_homebrew
 install_ansible
 echo "Running Ansible to complete the installation..."
-${VIRTUALENV}/bin/ansible-playbook runbook.yml
+${VIRTUALENV}/bin/ansible-playbook -i inventory runbook.yml
