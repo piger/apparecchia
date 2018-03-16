@@ -33,6 +33,7 @@ install_ansible() {
     echo "Installing Ansible inside the virtualenv..."
     if [[ ! -L ansible-playbook ]]; then
         virtualenv $VIRTUALENV
+        ${VIRTUALENV}/bin/pip install -U pip
         ${VIRTUALENV}/bin/pip install -U Ansible
     fi
 }
