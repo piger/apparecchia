@@ -3,41 +3,75 @@
 - hosts: all
   connection: local
 
-  environment:
-    HOMEBREW_CASK_OPTS: "--appdir=/Applications"
-
   vars:
+    vagrant_nfs_enabled: false
     homebrew_apps:
-      - coreutils
-      - moreutils
-      - tmux
-      - pwgen
+      - archey
+      - aria2
+      - asciiquarium
       - atool
-      - gnupg
-      - ssh-copy-id
-      - jq
-      - tig
-      - mtr
+      - awscli
+      - coreutils
+      - direnv
+      - exa
+      - fortune
+      - gawk
       - git
       - gnu-sed
-      - gawk
-      - the_silver_searcher
+      - gnupg
+      - go
+      - gotty
+      - hping
+      - imapfilter
+      - irssi
+      - jid
+      - jq
+      - lua
+      - moreutils
+      - mtr
+      - nmap
+      - packer
+      - peco
+      - pstree
+      - pwgen
       - shellcheck
       - socat
-      - awscli
-      - packer
+      - ssh-copy-id
+      - task
+      - terminal-notifier
+      - terraform
+      - the_silver_searcher
+      - tig
+      - tmux
+      - vim
+      - ykpers
+      - zsh
+      - zsh-completions
+      - zsh-syntax-highlighting
     cask_apps:
+      - chefdk
+      - emacs
+      - macvim
       - vagrant
       - virtualbox
-      - chefdk
+      - iterm2
+      - spotify
+      - mattermost
+      - firefox
+      - hammerspoon
+      - alfred
 
   tasks:
     - name: Install applications from Homebrew
-      homebrew: name={{ item }} state=present
+      homebrew:
+        name: "{{ item }}"
+        state: present
       with_items: "{{ homebrew_apps }}"
 
     - name: Install applications from Homebrew Cask
-      homebrew_cask: name={{ item }} state=present
+      homebrew_cask:
+        name: "{{ item }}"
+        state: present
       with_items: "{{ cask_apps }}"
 
     - name: NFS vagrant
@@ -50,3 +84,19 @@
           Cmnd_Alias VAGRANT_NFSD = /sbin/nfsd restart
           Cmnd_Alias VAGRANT_EXPORTS_REMOVE = /usr/bin/sed -E -e /*/ d -ibak /etc/exports
           %admin ALL=(root) NOPASSWD: VAGRANT_EXPORTS_ADD, VAGRANT_NFSD, VAGRANT_EXPORTS_REMOVE
+      when: vagrant_nfs_enabled
+
+    - name: (Desktop) Read scroll bars configuration
+      command: defaults read -g AppleShowScrollBars
+      register: apple_scroll_bars
+      changed_when: False
+
+    - name: (Desktop) Always show scroll bars
+      command: defaults write -g AppleShowScrollBars -string Always
+      when: apple_scroll_bars.stdout != "Always"
+
+    - name: install the chef completion crontab script
+      cron:
+        name: refresh zsh completion
+        special_time: hourly
+        job: '$HOME/Preferences/bin/zsh_chef_completion.sh'

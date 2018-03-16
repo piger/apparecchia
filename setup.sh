@@ -13,10 +13,12 @@ install_cmdline() {
     fi
 }
 
+export PATH="/usr/local/sbin:/usr/local/bin:$PATH"
+
 install_homebrew() {
     echo "Installing homebrew..."
     if ! which brew >/dev/null 2>&1; then
-        ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+        /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
     fi
 }
 
@@ -31,7 +33,13 @@ install_ansible() {
     echo "Installing Ansible inside the virtualenv..."
     if [[ ! -L ansible-playbook ]]; then
         virtualenv $VIRTUALENV
-        ${VIRTUALENV}/bin/pip install Ansible
+        ${VIRTUALENV}/bin/pip install -U Ansible
+    fi
+}
+
+install_dotfiles() {
+    if [[ ! -d $HOME/Preferences ]]; then
+        git clone git@github.com:piger/Preferences.git $HOME/Preferences
     fi
 }
 
@@ -51,5 +59,6 @@ install_cmdline
 install_virtualenv
 install_homebrew
 install_ansible
+install_dotfiles
 echo "Running Ansible to complete the installation..."
 ${VIRTUALENV}/bin/ansible-playbook -i inventory runbook.yml
