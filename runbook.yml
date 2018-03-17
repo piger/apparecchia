@@ -28,6 +28,7 @@
       - jq
       - lua
       - moreutils
+      - mr
       - mtr
       - nmap
       - packer
