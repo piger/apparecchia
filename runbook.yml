@@ -49,17 +49,22 @@
       - zsh-completions
       - zsh-syntax-highlighting
     cask_apps:
+      - alfred
+      - appcleaner
+      - bartender
       - chefdk
+      - dropbox
       - emacs
-      - macvim
-      - vagrant
-      - virtualbox
-      - iterm2
-      - spotify
-      - mattermost
       - firefox
       - hammerspoon
-      - alfred
+      - istat-menus
+      - iterm2
+      - macvim
+      - mattermost
+      - spotify
+      - vagrant
+      - virtualbox
+      - visual-studio-code
 
   tasks:
     - name: Install applications from Homebrew
@@ -86,17 +91,29 @@
           %admin ALL=(root) NOPASSWD: VAGRANT_EXPORTS_ADD, VAGRANT_NFSD, VAGRANT_EXPORTS_REMOVE
       when: vagrant_nfs_enabled
 
-    - name: (Desktop) Read scroll bars configuration
-      command: defaults read -g AppleShowScrollBars
-      register: apple_scroll_bars
-      changed_when: False
+    # - name: (Desktop) Read scroll bars configuration
+    #   command: defaults read -g AppleShowScrollBars
+    #   register: apple_scroll_bars
+    #   changed_when: False
 
-    - name: (Desktop) Always show scroll bars
-      command: defaults write -g AppleShowScrollBars -string Always
-      when: apple_scroll_bars.stdout != "Always"
+    # - name: (Desktop) Always show scroll bars
+    #   command: defaults write -g AppleShowScrollBars -string Always
+    #   when: apple_scroll_bars.stdout != "Always"
 
     - name: install the chef completion crontab script
       cron:
         name: refresh zsh completion
         special_time: hourly
         job: '$HOME/Preferences/bin/zsh_chef_completion.sh'
+
+    - name: fix permissions for zsh completion
+      file:
+        path: /usr/local/share
+        mode: 0755
+        state: directory
+
+    - name: synlink Preferences/bin to home
+      file:
+        path: "$HOME/bin"
+        src: "$HOME/Preferences/bin"
+        state: link
