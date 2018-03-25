@@ -1,11 +1,8 @@
 ---
 - hosts: localhost
-  connection: local
 
   vars_files:
     - vars.yml
-  environment:
-    GOPATH: "{{ gopath }}"
 
   tasks:
     - name: Install applications from Homebrew
@@ -52,6 +49,8 @@
       include_role:
         name: go
       when: install_go
+      environment:
+        GOPATH: "{{ gopath }}"
 
     - name: check for the presence of a local tasks file
       stat:

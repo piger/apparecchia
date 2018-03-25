@@ -1,6 +1,6 @@
 ---
 vagrant_nfs_enabled: false
-gopath: "$HOME/dev/go"
+gopath: "{{ ansible_user_dir }}/dev/go"
 install_go: True
 
 homebrew_apps:
