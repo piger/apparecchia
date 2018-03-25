@@ -54,12 +54,15 @@
         mode: 0755
         state: directory
 
-    - name: synlink Preferences/bin to home
-      file:
-        path: "$HOME/bin"
-        src: "$HOME/Preferences/bin"
-        state: link
-
     - name: install go
       include_role:
         name: go
+
+    - name: check for the presence of a local tasks file
+      stat:
+        path: "{{ ansible_user_id }}.yml"
+      register: local_tasks_file
+
+    - name: execute the local tasks file
+      include_tasks: "{{ ansible_user_id }}.yml"
+      when: local_tasks_file.stat.exists == True
