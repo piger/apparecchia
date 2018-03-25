@@ -16,7 +16,6 @@ homebrew_apps:
   - git
   - gnu-sed
   - gnupg
-  - go
   - hping
   - imapfilter
   - irssi

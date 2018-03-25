@@ -1,7 +1,10 @@
 ---
 - name: install go
   homebrew:
-    name: go
+    name: "{{ item }}"
+  with_items:
+    - go
+    - dep
 
 - name: install several utilities
   command: go get -u "{{ item }}"
