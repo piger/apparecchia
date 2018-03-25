@@ -1,0 +1,18 @@
+---
+- name: install go
+  homebrew:
+    name: go
+
+- name: install several utilities
+  command: go get -u "{{ item }}"
+  args:
+    creates: "{{ gopath }}/bin/{{ item.split('/')[-1] }}"
+  with_items:
+    - golang.org/x/tools/cmd/godoc
+    - github.com/nsf/gocode
+    - golang.org/x/tools/cmd/goimports
+    - golang.org/x/tools/cmd/guru
+    - golang.org/x/tools/cmd/gotype
+    - golang.org/x/tools/cmd/gorename
+    - golang.org/x/tools/cmd/gomvpkg
+    - golang.org/x/tools/cmd/godex
