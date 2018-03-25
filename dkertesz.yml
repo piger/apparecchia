@@ -1,0 +1,12 @@
+---
+- name: synlink Preferences/bin to home
+  file:
+    path: "$HOME/bin"
+    src: "$HOME/Preferences/bin"
+    state: link
+
+- name: install the chef completion crontab script
+  cron:
+    name: refresh zsh completion
+    special_time: hourly
+    job: '$HOME/Preferences/bin/zsh_chef_completion.sh'

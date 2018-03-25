@@ -42,12 +42,6 @@
       command: defaults write -g AppleShowScrollBars -string Always
       when: apple_scroll_bars.failed == True or apple_scroll_bars.stdout != "Always"
 
-    - name: install the chef completion crontab script
-      cron:
-        name: refresh zsh completion
-        special_time: hourly
-        job: '$HOME/Preferences/bin/zsh_chef_completion.sh'
-
     - name: fix permissions for zsh completion
       file:
         path: /usr/local/share
@@ -57,6 +51,7 @@
     - name: install go
       include_role:
         name: go
+      when: install_go
 
     - name: check for the presence of a local tasks file
       stat:

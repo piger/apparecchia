@@ -1,6 +1,7 @@
 ---
 vagrant_nfs_enabled: false
 gopath: "$HOME/dev/go"
+install_go: True
 
 homebrew_apps:
   - archey
