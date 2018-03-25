@@ -5,6 +5,8 @@
 
   vars:
     vagrant_nfs_enabled: false
+    gopath: "$HOME/dev/go"
+
     homebrew_apps:
       - archey
       - aria2
@@ -20,7 +22,6 @@
       - gnu-sed
       - gnupg
       - go
-      - gotty
       - hping
       - imapfilter
       - irssi
@@ -49,13 +50,13 @@
       - zsh
       - zsh-completions
       - zsh-syntax-highlighting
+
     cask_apps:
       - alfred
       - appcleaner
       - bartender
       - chefdk
       - dropbox
-      - emacs
       - firefox
       - hammerspoon
       - istat-menus
@@ -63,9 +64,13 @@
       - macvim
       - mattermost
       - spotify
+      - steam
       - vagrant
       - virtualbox
       - visual-studio-code
+
+  environment:
+    GOPATH: "{{ gopath }}"
 
   tasks:
     - name: Install applications from Homebrew
@@ -119,3 +124,7 @@
         path: "$HOME/bin"
         src: "$HOME/Preferences/bin"
         state: link
+
+    - name: install go
+      include_role:
+        name: go
