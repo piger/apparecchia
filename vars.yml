@@ -1,0 +1,65 @@
+---
+vagrant_nfs_enabled: false
+gopath: "$HOME/dev/go"
+
+homebrew_apps:
+  - archey
+  - aria2
+  - asciiquarium
+  - atool
+  - awscli
+  - coreutils
+  - direnv
+  - exa
+  - fortune
+  - gawk
+  - git
+  - gnu-sed
+  - gnupg
+  - go
+  - hping
+  - imapfilter
+  - irssi
+  - jid
+  - jq
+  - lua
+  - moreutils
+  - mr
+  - mtr
+  - nmap
+  - packer
+  - peco
+  - pstree
+  - pwgen
+  - shellcheck
+  - socat
+  - ssh-copy-id
+  - task
+  - terminal-notifier
+  - terraform
+  - the_silver_searcher
+  - tig
+  - tmux
+  - vim
+  - ykpers
+  - zsh
+  - zsh-completions
+  - zsh-syntax-highlighting
+
+cask_apps:
+  - alfred
+  - appcleaner
+  - bartender
+  - chefdk
+  - dropbox
+  - firefox
+  - hammerspoon
+  - istat-menus
+  - iterm2
+  - macvim
+  - mattermost
+  - spotify
+  - steam
+  - vagrant
+  - virtualbox
+  - visual-studio-code
