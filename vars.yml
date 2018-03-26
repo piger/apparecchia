@@ -60,8 +60,11 @@ cask_apps:
   - macvim
   - mattermost
   - osxfuse
+  - quicklook-json
+  - quicklook-csv
   - spotify
   - steam
   - vagrant
   - virtualbox
   - visual-studio-code
+  - xquartz
