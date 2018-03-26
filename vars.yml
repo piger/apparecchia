@@ -56,8 +56,10 @@ cask_apps:
   - hammerspoon
   - istat-menus
   - iterm2
+  - java
   - macvim
   - mattermost
+  - osxfuse
   - spotify
   - steam
   - vagrant
