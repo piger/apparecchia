@@ -60,3 +60,11 @@
     - name: execute the local tasks file
       include_tasks: "{{ ansible_user_id }}.yml"
       when: local_tasks_file.stat.exists == True
+
+    - name: install ruby dependencies to use esd25519 keys with knife
+      command: chef gem install "{{ item.src }}"
+      args:
+        creates: "{{ item.dest }}"
+      with_items:
+        - { src: "rbnacl -v '< 5.0'", dest: "$HOME/gem/ruby/2.4.0/cache/rbnacl-4.0.2.gem" }
+        - { src: "bcrypt_pbkdf", dest: "$HOME/gem/ruby/2.4.0/cache/bcrypt_pbkdf-1.0.0.gem" }

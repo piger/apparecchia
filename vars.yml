@@ -17,17 +17,20 @@ homebrew_apps:
   - git
   - gnu-sed
   - gnupg
+  - gron
   - hping
   - imapfilter
   - irssi
   - jid
   - jq
+  - libsodium
   - lua
   - moreutils
   - mr
   - mtr
   - nmap
   - packer
+  - pandoc
   - peco
   - pstree
   - pwgen
@@ -49,6 +52,7 @@ homebrew_apps:
 cask_apps:
   - alfred
   - appcleaner
+  - aws-vault
   - bartender
   - chefdk
   - dropbox
