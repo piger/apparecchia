@@ -48,6 +48,7 @@ homebrew_apps:
   - zsh
   - zsh-completions
   - zsh-syntax-highlighting
+  - watch
 
 cask_apps:
   - alfred
